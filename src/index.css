@@ -1,0 +1,304 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --color-primary: #173F2E;
+  --color-primary-light: #245840;
+  --color-primary-dark: #0F2A1E;
+}
+
+html {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+body {
+  font-family: var(--font-sans);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.font-display {
+  font-family: var(--font-serif);
+}
+
+/* Dark Mode Theme Rules */
+html.dark {
+  color-scheme: dark;
+  background-color: #0c1811;
+  color: #e5f0e9;
+}
+
+html.dark body {
+  background-color: #0c1811;
+  color: #e5f0e9;
+}
+
+html.dark header.sticky {
+  background-color: rgba(12, 24, 17, 0.92) !important;
+  border-color: #203b2c !important;
+}
+
+html.dark .bg-white {
+  background-color: #13241b !important;
+  color: #e5f0e9;
+}
+
+/* Warm Ivory / Beige Containers in Dark Mode */
+html.dark .bg-\[\#FAF9F5\],
+html.dark .bg-\[\#FAF8F3\],
+html.dark .bg-\[\#FAF7F0\],
+html.dark .bg-\[\#FAF6EC\],
+html.dark .bg-\[\#FAF5EB\],
+html.dark .bg-\[\#F8F6F0\],
+html.dark .bg-\[\#F7F5EE\],
+html.dark .bg-\[\#F6F4ED\],
+html.dark .bg-\[\#F6F4EE\],
+html.dark .bg-\[\#F6F3EC\],
+html.dark .bg-\[\#F5F2EB\],
+html.dark .bg-\[\#F4EFE5\],
+html.dark .bg-\[\#F3EFE6\],
+html.dark .bg-\[\#F2EFE8\],
+html.dark .bg-\[\#F2EDE2\],
+html.dark .bg-\[\#F2EDE1\],
+html.dark .bg-\[\#F2ECE1\],
+html.dark .bg-\[\#F2ECE0\],
+html.dark .bg-\[\#F1EFE8\],
+html.dark .bg-\[\#F0EBE1\],
+html.dark .bg-\[\#F0EBE0\],
+html.dark .bg-\[\#EDE9DE\] {
+  background-color: #112018 !important;
+  color: #e5f0e9;
+}
+
+html.dark .bg-\[\#F0EBE1\]\/60 {
+  background-color: rgba(20, 36, 27, 0.6) !important;
+}
+
+/* Soft Green Tints in Dark Mode */
+html.dark .bg-\[\#F2F8F4\],
+html.dark .bg-\[\#F2F7F3\],
+html.dark .bg-\[\#F1F6F3\],
+html.dark .bg-\[\#F0FDF4\],
+html.dark .bg-\[\#EBF5EE\],
+html.dark .bg-\[\#EBF5ED\],
+html.dark .bg-\[\#EBF4EE\],
+html.dark .bg-\[\#EBF3ED\],
+html.dark .bg-\[\#EAF5EE\],
+html.dark .bg-\[\#EAF5ED\],
+html.dark .bg-\[\#EAF2EC\],
+html.dark .bg-\[\#E8F1EC\],
+html.dark .bg-\[\#E8F1EB\],
+html.dark .bg-\[\#E9EFE9\],
+html.dark .bg-\[\#D8F3DC\],
+html.dark .bg-\[\#D8ECDE\],
+html.dark .bg-\[\#D5E6D8\],
+html.dark .bg-\[\#D7E3D7\] {
+  background-color: #173325 !important;
+  border-color: #2b5640 !important;
+  color: #d1ead8 !important;
+}
+
+/* Subtle Pill / Badge Neutrals in Dark Mode */
+html.dark .bg-\[\#EAE5D9\],
+html.dark .bg-\[\#EAE4D5\],
+html.dark .bg-\[\#EAE3D3\],
+html.dark .bg-\[\#E4DDCF\],
+html.dark .bg-\[\#E2DDD2\],
+html.dark .bg-\[\#E2DDD0\],
+html.dark .bg-\[\#DDD7C8\],
+html.dark .bg-\[\#DDD6C5\],
+html.dark .bg-\[\#D9D2C3\],
+html.dark .bg-\[\#D1CBBD\] {
+  background-color: #192d22 !important;
+  color: #c9e0d1 !important;
+}
+
+/* Amber / Gold Tints in Dark Mode */
+html.dark .bg-\[\#FAF0DC\],
+html.dark .bg-\[\#F6F0DF\],
+html.dark .bg-\[\#F5ECD5\],
+html.dark .bg-\[\#F5E6CA\],
+html.dark .bg-\[\#FEF3C7\],
+html.dark .bg-\[\#FFE7CE\],
+html.dark .bg-\[\#FFE8D6\],
+html.dark .bg-\[\#FFF7ED\],
+html.dark .bg-\[\#FFF9E6\] {
+  background-color: #252115 !important;
+  border-color: #42351d !important;
+  color: #f7d58a !important;
+}
+
+/* Borders in Dark Mode */
+html.dark .border-\[\#EAE6DD\],
+html.dark .border-\[\#EAE3D3\],
+html.dark .border-\[\#EAE4D5\],
+html.dark .border-\[\#E8E2D2\],
+html.dark .border-\[\#E5DFD1\],
+html.dark .border-\[\#E5DFD2\],
+html.dark .border-\[\#DCD6C7\],
+html.dark .border-\[\#D4CDBE\],
+html.dark .border-\[\#D5CEC0\],
+html.dark .border-\[\#D2CABA\],
+html.dark .border-\[\#D0C7B5\],
+html.dark .border-\[\#E9E4D8\],
+html.dark .border-\[\#F2ECE1\],
+html.dark .border-\[\#E4DDCF\],
+html.dark .border-\[\#DDD6C5\],
+html.dark .border-\[\#C5D7C5\],
+html.dark .border-\[\#B8D5C2\] {
+  border-color: #223c2e !important;
+}
+
+/* Typography in Dark Mode - High Contrast & Never Dim */
+html.dark .text-\[\#173F2E\],
+html.dark .text-\[\#1E2922\],
+html.dark .text-\[\#2C4A3A\],
+html.dark .text-\[\#294B37\],
+html.dark .text-\[\#0F2A1E\],
+html.dark .text-\[\#0F2B1F\],
+html.dark .text-\[\#1B4332\],
+html.dark .text-\[\#1E40AF\],
+html.dark .text-\[\#1E4330\],
+html.dark .text-\[\#1E4834\],
+html.dark .text-\[\#22573F\],
+html.dark .text-\[\#23563F\],
+html.dark .text-\[\#23583E\],
+html.dark .text-\[\#245840\],
+html.dark .text-\[\#2B2D42\],
+html.dark .text-\[\#2A4B63\] {
+  color: #F0F8F3 !important;
+}
+
+/* Review quotes, body text, and descriptions in Dark Mode */
+html.dark .text-\[\#243E30\],
+html.dark .text-\[\#345241\],
+html.dark .text-\[\#364F40\],
+html.dark .text-\[\#365342\],
+html.dark .text-\[\#365D46\],
+html.dark .text-\[\#3A5545\],
+html.dark .text-\[\#3B664B\],
+html.dark .text-\[\#3C5546\],
+html.dark .text-\[\#3C5848\],
+html.dark .text-\[\#3D5646\],
+html.dark .text-\[\#3E5848\],
+html.dark .text-\[\#3E5C4A\],
+html.dark .text-\[\#405B4B\],
+html.dark .text-\[\#445E50\],
+html.dark .text-\[\#4D6959\] {
+  color: #E8F5EC !important;
+}
+
+/* Secondary / metadata / dates / locations in Dark Mode */
+html.dark .text-\[\#476353\],
+html.dark .text-\[\#4A6454\],
+html.dark .text-\[\#4A6755\],
+html.dark .text-\[\#4E6B5B\],
+html.dark .text-\[\#526F5E\],
+html.dark .text-\[\#52705E\],
+html.dark .text-\[\#527760\],
+html.dark .text-\[\#567262\],
+html.dark .text-\[\#586E61\],
+html.dark .text-\[\#5A7363\],
+html.dark .text-\[\#5C7767\],
+html.dark .text-\[\#5C7867\],
+html.dark .text-\[\#5D7A68\],
+html.dark .text-\[\#607D6C\],
+html.dark .text-\[\#688574\],
+html.dark .text-\[\#698573\],
+html.dark .text-\[\#6D8777\],
+html.dark .text-\[\#6D8A78\],
+html.dark .text-\[\#6E8777\],
+html.dark .text-\[\#6F8E7C\],
+html.dark .text-\[\#718096\],
+html.dark .text-\[\#718D7B\],
+html.dark .text-\[\#789584\],
+html.dark .text-\[\#7A9383\],
+html.dark .text-\[\#7A9584\],
+html.dark .text-\[\#7B9585\],
+html.dark .text-\[\#7E9687\],
+html.dark .text-\[\#8BA494\],
+html.dark .text-\[\#8BA495\],
+html.dark .text-\[\#99A69D\],
+html.dark .text-\[\#9CB5A5\],
+html.dark .text-\[\#A6B8AC\],
+html.dark .text-\[\#3D5B48\] {
+  color: #B4D7C3 !important;
+}
+
+/* Green accents & icons in Dark Mode */
+html.dark .text-\[\#2D6A4F\] {
+  color: #52B788 !important;
+}
+
+/* Warm / Amber labels in Dark Mode */
+html.dark .text-\[\#635338\],
+html.dark .text-\[\#6B5018\],
+html.dark .text-\[\#7A5B1C\],
+html.dark .text-\[\#8A4A28\],
+html.dark .text-\[\#8C5311\],
+html.dark .text-\[\#8C5819\],
+html.dark .text-\[\#92400E\],
+html.dark .text-\[\#946200\],
+html.dark .text-\[\#B46A14\] {
+  color: #F8D580 !important;
+}
+
+/* Inputs, Selects, and Textareas */
+html.dark input:not([type="checkbox"]):not([type="radio"]),
+html.dark select,
+html.dark textarea {
+  background-color: #13241b !important;
+  color: #e8f3ec !important;
+  border-color: #294837 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #72907d !important;
+}
+
+/* Universal Button Click Loading & Active State Effects */
+button {
+  position: relative;
+  transition: transform 0.16s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.16s ease, filter 0.16s ease;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* Flash ripple and tactile feedback for any button clicked */
+button.is-loading-click {
+  opacity: 0.88;
+  filter: brightness(0.96);
+  pointer-events: none;
+}
+
+button.is-loading-click::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
+  animation: btn-loading-ripple 0.38s ease-out forwards;
+  pointer-events: none;
+  z-index: 50;
+}
+
+@keyframes btn-loading-ripple {
+  0% {
+    opacity: 1;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
