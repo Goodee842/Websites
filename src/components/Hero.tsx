@@ -87,32 +87,43 @@ export const Hero: React.FC<HeroProps> = ({ onOrderNow, onExplore }) => {
             </div>
           </div>
 
-          {/* Right Column: Hero Image with Fruity Nest Sticker */}
+          {/* Right Column: Hero Display Image with feathered opacity fade on all edges & angles */}
           <div className="lg:col-span-5 relative flex items-center justify-center mt-6 lg:mt-0">
-            <div className="relative w-full max-w-md aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 border-white group">
-              <img
-                src={heroParfaitImg}
-                alt="Fruity Nest signature parfait with layers of Greek yogurt, strawberries, blueberries, kiwi and granola"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
+            <div className="relative w-full max-w-md aspect-square flex items-center justify-center group">
+              {/* Soft ambient atmospheric glow behind the fading image */}
+              <div className="absolute inset-2 sm:inset-4 bg-gradient-to-tr from-[#E2EFE7]/80 via-[#F5EEDD]/60 to-[#E0F0E6]/50 rounded-full blur-2xl pointer-events-none -z-10" />
 
-              {/* Gradient overlay for contrast */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+              {/* Display image with feathered opacity fade on all edges and angles merging with background */}
+              <div
+                className="w-full h-full relative overflow-hidden flex items-center justify-center"
+                style={{
+                  maskImage:
+                    'radial-gradient(ellipse 48% 48% at 50% 50%, #000000 20%, rgba(0, 0, 0, 0.85) 40%, rgba(0, 0, 0, 0.45) 65%, rgba(0, 0, 0, 0.1) 85%, transparent 95%)',
+                  WebkitMaskImage:
+                    'radial-gradient(ellipse 48% 48% at 50% 50%, #000000 20%, rgba(0, 0, 0, 0.85) 40%, rgba(0, 0, 0, 0.45) 65%, rgba(0, 0, 0, 0.1) 85%, transparent 95%)',
+                }}
+              >
+                <img
+                  src={heroParfaitImg}
+                  alt="Fruity Nest signature parfait with layers of Greek yogurt, strawberries, blueberries, kiwi and granola"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out select-none"
+                />
 
-              {/* Brand Logo Sticker positioned right on the cup area */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
-                <BrandLogo variant="sticker" className="shadow-lg transform scale-110 sm:scale-125" />
+                {/* Brand Logo Sticker positioned right on the cup area */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
+                  <BrandLogo variant="sticker" className="shadow-md transform scale-110 sm:scale-125" />
+                </div>
               </div>
 
               {/* Floating Top Badge */}
-              <div className="absolute top-4 left-4 z-20 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-[#ECE7DA] flex items-center gap-1.5 text-xs font-semibold text-[#173F2E]">
+              <div className="absolute top-2 left-2 sm:top-4 sm:left-4 z-20 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm border border-[#ECE7DA] flex items-center gap-1.5 text-xs font-semibold text-[#173F2E] pointer-events-none">
                 <span className="w-2 h-2 rounded-full bg-[#38B000]" />
                 <span>Made Fresh Daily</span>
               </div>
 
               {/* Floating Bottom Badge */}
-              <div className="absolute bottom-4 right-4 z-20 bg-[#173F2E]/95 backdrop-blur-md text-[#FAF7F0] px-3.5 py-1.5 rounded-full shadow-md flex items-center gap-1.5 text-xs font-medium">
+              <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 z-20 bg-[#173F2E]/95 backdrop-blur-md text-[#FAF7F0] px-3.5 py-1.5 rounded-full shadow-md flex items-center gap-1.5 text-xs font-medium pointer-events-none">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#52B788]" />
                 <span>100% Greek Yogurt</span>
               </div>
