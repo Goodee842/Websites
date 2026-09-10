@@ -116,14 +116,9 @@ export const SlidingReviews: React.FC<SlidingReviewsProps> = ({
                   </div>
                   <div className="text-xs text-[#6F8E7C] dark:text-[#B4D7C3] flex items-center gap-2">
                     <span>{activeReview.location}</span>
-                    {activeReview.dispatchCode && (
-                      <>
-                        <span>•</span>
-                        <span className="font-mono text-[11px] text-[#2D6A4F] dark:text-[#52B788] font-semibold">
-                          #{activeReview.dispatchCode}
-                        </span>
-                      </>
-                    )}
+                    <span className="inline-flex items-center text-[10px] text-[#2D6A4F] dark:text-[#52B788] font-semibold">
+                      • Verified Parfait Spoon
+                    </span>
                   </div>
                 </div>
               </div>

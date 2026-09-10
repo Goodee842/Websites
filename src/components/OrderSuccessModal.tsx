@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Check, Copy, ShieldCheck, Share2, Star, Clock, Bike, PhoneCall, CheckCircle2 } from 'lucide-react';
+import { Check, Share2, Star, Clock, Bike, PhoneCall } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Order } from '../types';
 import { LoadingButton } from './LoadingButton';
@@ -19,7 +19,6 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
 }) => {
   if (!isOpen || !order) return null;
 
-  const [copiedId, setCopiedId] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
 
   useEffect(() => {
@@ -35,13 +34,7 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
     }
   }, []);
 
-  const handleCopyOrderId = () => {
-    navigator.clipboard.writeText(order.orderId);
-    setCopiedId(true);
-    setTimeout(() => setCopiedId(false), 2000);
-  };
-
-  const reviewLink = `${window.location.origin}#review?phone=${encodeURIComponent(order.customer.phone)}&orderId=${order.orderId}`;
+  const reviewLink = `${window.location.origin}#review?phone=${encodeURIComponent(order.customer.phone)}`;
 
   const handleCopyReviewLink = () => {
     navigator.clipboard.writeText(reviewLink);
@@ -50,7 +43,7 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
   };
 
   const handleShareWhatsApp = () => {
-    const text = `🌿 Fruity Nest Order Confirmed!\nOrder ID: ${order.orderId}\nPhone: ${order.customer.phone}\nDelivery Address: ${order.customer.address}, ${order.customer.area} LGA\nTotal: ₦${order.total.toLocaleString()}`;
+    const text = `🌿 Fruity Nest Order Placed Successfully!\nName: ${order.customer.fullName}\nContact number: ${order.customer.phone}\nLocation: ${order.customer.address}, ${order.customer.area}\nTotal: ₦${order.total.toLocaleString()}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -67,63 +60,89 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
             <div className="w-14 h-14 rounded-full bg-[#EAF5ED] text-[#2D6A4F] flex items-center justify-center mb-3 shadow-xs border border-[#CDE6D6]">
               <Check className="w-8 h-8 stroke-[3]" />
             </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF7F0] text-[#173F2E] text-xs font-semibold border border-[#E8E2D2] mb-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#2D6A4F]" />
-              <span>Order Received • #{order.orderId}</span>
-            </div>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#173F2E] tracking-tight">
-              Order Placed Successfully!
+              Order placed successfully.
             </h2>
-            <p className="text-xs sm:text-sm text-[#5C7867] max-w-sm mt-1">
-              Your Greek yogurt parfaits are being freshly layered right now in our kitchen.
+            <p className="text-sm sm:text-base text-[#2E5A44] max-w-md mx-auto mt-2 font-medium leading-relaxed">
+              Your order has been received successfully, the dispatch rider will contact you shortly!
             </p>
           </div>
 
-          {/* RIDER DISPATCH & PHONE CONTACT CARD */}
-          <div className="bg-[#173F2E] text-[#FAF7F0] rounded-3xl p-6 text-center relative overflow-hidden shadow-lg border-2 border-[#2D6A4F]">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#2D6A4F]/30 rounded-full blur-xl pointer-events-none" />
-
-            <span className="text-[11px] font-bold uppercase tracking-widest text-[#52B788] block mb-1">
-              Tracking & Dispatch Identification
-            </span>
-
-            {/* Prominent Order Number */}
-            <div className="font-mono text-3xl sm:text-4xl font-extrabold tracking-widest text-white my-2 py-2 px-5 rounded-2xl bg-[#0F2A1E]/80 border border-[#2B5E47] inline-block">
-              {order.orderId}
-            </div>
-
-            <div className="flex items-center justify-center gap-2 text-xs text-[#D1DFD7] max-w-sm mx-auto mt-2">
-              <PhoneCall className="w-4 h-4 text-[#52B788] shrink-0" />
-              <span>
-                Rider contact number: <strong className="text-white font-mono">{order.customer.phone}</strong>
+          {/* Primary Order Details Card: Name, Contact number, Location */}
+          <div className="bg-[#FAF9F5] rounded-3xl p-5 sm:p-6 border border-[#E2DBD0] shadow-sm space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E7E1D4]">
+              <h3 className="font-serif text-base sm:text-lg font-bold text-[#173F2E]">
+                Order Details
+              </h3>
+              <span className="px-3 py-1 rounded-full bg-[#EAF4EE] text-[#1E4B34] text-xs font-bold border border-[#CCE3D4]">
+                {order.payment.method === 'bank_transfer' ? 'Bank Transfer Confirmed' : 'Payment on Delivery'}
               </span>
             </div>
 
-            <p className="text-xs text-[#A3C7B3] max-w-xs mx-auto mt-1.5 leading-relaxed">
-              Track this order anytime using your phone number <strong>{order.customer.phone}</strong>.
-            </p>
+            {/* Direct Customer & Dispatch Contact Information */}
+            <div className="bg-white rounded-2xl p-4 border border-[#ECE5D8] space-y-2.5">
+              <div className="flex items-center justify-between text-xs sm:text-sm py-1 border-b border-[#F5EFE6]">
+                <span className="text-[#688373] font-medium">Name:</span>
+                <span className="font-bold text-[#173F2E]">{order.customer.fullName}</span>
+              </div>
 
-            {/* Action buttons */}
-            <div className="flex flex-wrap items-center justify-center gap-2.5 mt-4">
-              <LoadingButton
-                variant="unstyled"
-                size="none"
-                onClick={handleCopyOrderId}
-                className="px-4 py-2 bg-white text-[#173F2E] hover:bg-[#F3EFE6] rounded-full text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
-              >
-                {copiedId ? (
-                  <>
-                    <Check className="w-3.5 h-3.5 text-[#2D6A4F]" />
-                    <span>Copied ID!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5" />
-                    <span>Copy Order ID</span>
-                  </>
-                )}
-              </LoadingButton>
+              <div className="flex items-center justify-between text-xs sm:text-sm py-1 border-b border-[#F5EFE6]">
+                <span className="text-[#688373] font-medium">Contact number:</span>
+                <span className="font-mono font-bold text-[#173F2E] text-sm sm:text-base">
+                  {order.customer.phone}
+                </span>
+              </div>
 
+              <div className="flex items-start justify-between text-xs sm:text-sm py-1 border-b border-[#F5EFE6]">
+                <span className="text-[#688373] font-medium shrink-0 mr-4">Location:</span>
+                <span className="font-bold text-[#173F2E] text-right">
+                  {order.customer.address}, {order.customer.area}
+                </span>
+              </div>
+
+              {order.customer.deliveryNotes && (
+                <div className="flex items-start justify-between text-xs py-1">
+                  <span className="text-[#688373] font-medium shrink-0 mr-4">Delivery Note:</span>
+                  <span className="text-[#173F2E] text-right italic font-medium">
+                    {order.customer.deliveryNotes}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* Items Ordered */}
+            <div className="space-y-2">
+              <span className="text-[11px] uppercase font-bold tracking-wider text-[#63806E] block">
+                Items Ordered ({order.items.length})
+              </span>
+              <div className="space-y-2">
+                {order.items.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex justify-between items-center text-xs bg-white p-3 rounded-xl border border-[#ECE5D8]"
+                  >
+                    <div>
+                      <span className="font-bold text-[#173F2E]">
+                        {item.quantity}x {item.productName}
+                      </span>
+                      <span className="text-[11px] text-[#6D8777] block">
+                        {item.size.name} • {item.yogurtType}
+                      </span>
+                    </div>
+                    <span className="font-bold text-[#173F2E]">₦{item.totalPrice.toLocaleString()}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Total Amount & WhatsApp Action */}
+            <div className="pt-3 border-t border-[#E7E1D4] flex items-center justify-between">
+              <div>
+                <span className="text-[11px] text-[#6D8777] uppercase font-semibold block">Total Amount</span>
+                <span className="font-serif text-xl sm:text-2xl font-bold text-[#173F2E]">
+                  ₦{order.total.toLocaleString()}
+                </span>
+              </div>
               <LoadingButton
                 variant="unstyled"
                 size="none"
@@ -131,8 +150,21 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
                 className="px-4 py-2 bg-[#25D366] text-white hover:bg-[#20BE5A] rounded-full text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
               >
                 <Share2 className="w-3.5 h-3.5" />
-                <span>Save to WhatsApp</span>
+                <span>Share on WhatsApp</span>
               </LoadingButton>
+            </div>
+          </div>
+
+          {/* Tracking Callout: Tied strictly to phone number */}
+          <div className="p-4 rounded-2xl bg-[#EAF5ED] border border-[#CCE3D4] flex items-center gap-3 text-xs text-[#173F2E]">
+            <div className="w-8 h-8 rounded-full bg-[#173F2E] text-white flex items-center justify-center shrink-0">
+              <PhoneCall className="w-4 h-4 text-[#52B788]" />
+            </div>
+            <div>
+              <span className="font-bold block">Tied to Customer Phone Number</span>
+              <p className="text-[#325A44] mt-0.5 leading-relaxed">
+                Your dispatch tracking is tied directly to <strong className="font-mono font-bold text-[#173F2E]">{order.customer.phone}</strong>. Our rider will call this number directly before doorstep arrival.
+              </p>
             </div>
           </div>
 
@@ -185,25 +217,6 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
                   <span className="text-[#6D8777]">Rider calls {order.customer.phone} on arrival</span>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Recipient summary */}
-          <div className="p-4 rounded-2xl bg-white border border-[#E8E2D5] text-xs text-[#3C5848] space-y-1">
-            <div className="flex justify-between font-bold text-[#173F2E]">
-              <span>Customer Name:</span>
-              <span>{order.customer.fullName}</span>
-            </div>
-            <div className="flex justify-between text-[#5C7867]">
-              <span>Phone (Dispatch Call):</span>
-              <span className="font-mono font-bold text-[#173F2E]">{order.customer.phone}</span>
-            </div>
-            <p className="text-[#6D8777] pt-1">
-              {order.customer.address}, {order.customer.area} LGA
-            </p>
-            <div className="pt-2 border-t border-[#F2EDE2] flex justify-between font-serif font-bold text-sm text-[#173F2E]">
-              <span>Total Amount:</span>
-              <span>₦{order.total.toLocaleString()}</span>
             </div>
           </div>
 

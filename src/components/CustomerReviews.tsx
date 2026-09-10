@@ -217,7 +217,7 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
                     <div>
                       <div className="flex items-center justify-between mb-1">
                         <label className="block text-xs font-semibold text-[#3C5848]">
-                          Location (Local Government) *
+                          Location / LGA *
                         </label>
                         <button
                           type="button"
@@ -258,7 +258,7 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
                   {/* Quick LGA selection chips */}
                   <div>
                     <span className="text-[10px] font-bold text-[#5C7767] uppercase tracking-wider block mb-1.5">
-                      Select Local Government:
+                      Select LGA:
                     </span>
                     <div className="flex flex-wrap gap-1.5">
                       {topLGAs.map((lga) => (

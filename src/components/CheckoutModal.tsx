@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   PhoneCall,
   MapPin,
+  Copy,
 } from 'lucide-react';
 import { CartItem, Order, OrderCustomer, OrderPayment } from '../types';
 
@@ -52,6 +53,24 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [copiedAccount, setCopiedAccount] = useState(false);
+  const [copiedAmount, setCopiedAmount] = useState(false);
+
+  const handleCopyAccount = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText('0289410291');
+    setCopiedAccount(true);
+    setTimeout(() => setCopiedAccount(false), 2000);
+  };
+
+  const handleCopyAmount = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText(grandTotal.toString());
+    setCopiedAmount(true);
+    setTimeout(() => setCopiedAmount(false), 2000);
+  };
 
   // Autofill from saved customer profile if available
   useEffect(() => {
@@ -320,7 +339,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               {/* Delivery Zone (Akwa Ibom State LGAs only) */}
               <div>
                 <label className="block text-xs font-semibold text-[#3C5848] mb-1 flex items-center justify-between">
-                  <span>Delivery LGA (Akwa Ibom State) *</span>
+                  <span>Delivery LGA *</span>
                   <span className="text-[10px] text-[#2D6A4F] font-bold">Fee: ₦{deliveryFee.toLocaleString()}</span>
                 </label>
                 <select
@@ -330,7 +349,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 >
                   {akwaIbomLGAs.map((lga) => (
                     <option key={lga} value={lga}>
-                      {lga} Local Government Area
+                      {lga}
                     </option>
                   ))}
                 </select>
@@ -422,25 +441,108 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
             {/* Payment Details Container */}
             {paymentMethod === 'bank_transfer' && (
-              <div className="p-4 rounded-2xl bg-[#FAF9F5] border border-[#E5DFD1] space-y-2.5 animate-in fade-in duration-150">
-                <div className="text-xs font-bold text-[#173F2E]">
-                  Dedicated Order Account Details
-                </div>
-                <div className="bg-white p-3 rounded-xl border border-[#DDD6C7] flex items-center justify-between">
-                  <div>
-                    <span className="text-[10px] text-[#6E8777] uppercase block font-medium">Bank Name</span>
-                    <span className="text-xs font-bold text-[#173F2E]">Wema Bank (Fruity Nest)</span>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-[10px] text-[#6E8777] uppercase block font-medium">Account Number</span>
-                    <span className="text-sm font-mono font-bold text-[#173F2E] tracking-wider">
-                      0289 410 291
+              <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#F0F7F2] via-[#F8FCF9] to-[#EAF5EE] border-2 border-[#1B4332] space-y-3.5 shadow-sm animate-in fade-in duration-200">
+                <div className="flex items-center justify-between pb-2 border-b border-[#D2E7DA]">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-full bg-[#173F2E] text-white flex items-center justify-center">
+                      <Building2 className="w-3.5 h-3.5 text-[#52B788]" />
+                    </div>
+                    <span className="text-xs font-extrabold uppercase tracking-wider text-[#173F2E]">
+                      Dedicated Order Account Details
                     </span>
                   </div>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#2D6A4F] text-white text-[10px] font-bold tracking-wide">
+                    Direct Auto-Reconcile
+                  </span>
                 </div>
-                <p className="text-[11px] text-[#5D7A68]">
-                  Transfer <strong>₦{grandTotal.toLocaleString()}</strong> to the account above. Payment will auto-reconcile with your order.
-                </p>
+
+                {/* Detailed Account Information Table / Card */}
+                <div className="bg-white rounded-xl border border-[#BEDBC9] overflow-hidden shadow-2xs divide-y divide-[#E6F1EA]">
+                  {/* Bank Name */}
+                  <div className="px-4 py-3 flex items-center justify-between bg-[#FCFDFD]">
+                    <span className="text-[11px] font-semibold text-[#5A7968] uppercase tracking-wider">
+                      Bank Name
+                    </span>
+                    <span className="text-sm font-extrabold text-[#173F2E]">
+                      Wema Bank (Fruity Nest)
+                    </span>
+                  </div>
+
+                  {/* Account Number with Copy Button */}
+                  <div className="px-4 py-3 flex items-center justify-between bg-[#F4F9F6]">
+                    <div>
+                      <span className="text-[11px] font-semibold text-[#5A7968] uppercase tracking-wider block">
+                        Account Number
+                      </span>
+                      <span className="text-base sm:text-lg font-mono font-extrabold text-[#0D3B23] tracking-wider">
+                        0289 410 291
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleCopyAccount}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#173F2E] text-white text-xs font-bold hover:bg-[#23563F] transition-all cursor-pointer shadow-xs active:scale-95"
+                    >
+                      {copiedAccount ? (
+                        <>
+                          <Check className="w-3.5 h-3.5 text-[#52B788]" />
+                          <span>Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3.5 h-3.5" />
+                          <span>Copy Number</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Account Name */}
+                  <div className="px-4 py-3 flex items-center justify-between bg-[#FCFDFD]">
+                    <span className="text-[11px] font-semibold text-[#5A7968] uppercase tracking-wider">
+                      Account Name
+                    </span>
+                    <span className="text-sm font-extrabold text-[#173F2E]">
+                      Fruity Nest Delights
+                    </span>
+                  </div>
+
+                  {/* Amount to Transfer with Copy Button */}
+                  <div className="px-4 py-3 flex items-center justify-between bg-[#EEF7F1]">
+                    <div>
+                      <span className="text-[11px] font-semibold text-[#2D6A4F] uppercase tracking-wider block">
+                        Amount to Transfer
+                      </span>
+                      <span className="text-base sm:text-xl font-serif font-extrabold text-[#173F2E]">
+                        ₦{grandTotal.toLocaleString()}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleCopyAmount}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#E0F0E6] text-[#173F2E] text-xs font-bold border border-[#B8DEC6] hover:bg-[#D2EAD9] transition-all cursor-pointer active:scale-95"
+                    >
+                      {copiedAmount ? (
+                        <>
+                          <Check className="w-3.5 h-3.5 text-[#2D6A4F]" />
+                          <span>Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3.5 h-3.5 text-[#2D6A4F]" />
+                          <span>Copy Amount</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[#E2F1E8] border border-[#C5E5D1] text-[11px] text-[#1E4D33]">
+                  <CheckCircle2 className="w-4 h-4 text-[#2D6A4F] shrink-0" />
+                  <p>
+                    Transfer exactly <strong>₦{grandTotal.toLocaleString()}</strong> to the account above, then click <strong>"I have made payment and confirmed order"</strong> below.
+                  </p>
+                </div>
               </div>
             )}
 
@@ -464,7 +566,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 Direct Dispatch Rider Call
               </span>
               <p className="text-[#365D46] leading-relaxed">
-                Our dispatch rider will call your phone number {phone ? `(${phone})` : ''} as soon as your parfait is layered and on its way to {area} LGA.
+                Our dispatch rider will call your phone number {phone ? `(${phone})` : ''} as soon as your parfait is layered and on its way to {area}.
               </p>
             </div>
           </div>
@@ -477,14 +579,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 <span className="font-bold text-[#173F2E]">₦{subtotal.toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
-                <span>Dispatch Fee ({area} LGA):</span>
+                <span>Dispatch Fee ({area}):</span>
                 <span className="font-bold text-[#173F2E]">
                   {deliveryFee === 0 ? 'FREE' : `₦${deliveryFee.toLocaleString()}`}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center justify-between gap-4 pt-2 border-t border-[#EAE4D5]">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-2 border-t border-[#EAE4D5]">
               <div>
                 <span className="text-[10px] text-[#6E8777] block uppercase font-medium">
                   Total to Pay
@@ -497,17 +599,21 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <button
                 type="submit"
                 disabled={isProcessing}
-                className="px-8 py-3.5 bg-[#173F2E] hover:bg-[#23563F] text-white font-bold rounded-full text-xs sm:text-sm transition-all duration-200 shadow-md flex items-center gap-2 cursor-pointer disabled:opacity-75"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 bg-[#173F2E] hover:bg-[#23563F] text-white font-bold rounded-full text-xs sm:text-sm transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
               >
                 {isProcessing ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Processing Order...</span>
+                    <span>Confirming Order...</span>
                   </>
                 ) : (
                   <>
                     <Check className="w-4 h-4 stroke-[3]" />
-                    <span>Pay ₦{grandTotal.toLocaleString()} & Confirm Order</span>
+                    <span>
+                      {paymentMethod === 'bank_transfer'
+                        ? 'I have made payment and confirmed order'
+                        : `Confirm Order (₦${grandTotal.toLocaleString()})`}
+                    </span>
                   </>
                 )}
               </button>

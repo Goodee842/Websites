@@ -102,7 +102,7 @@ export const TrackOrderModal: React.FC<TrackOrderModalProps> = ({
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Enter your phone number (e.g. 0802...) or Order ID"
+                placeholder="Enter your registered phone number (e.g. 0802 345 6789)"
                 className="w-full px-3.5 py-2.5 rounded-xl border border-[#DCD6C7] text-xs text-[#173F2E] bg-[#FAF9F5] focus:outline-none focus:ring-2 focus:ring-[#173F2E]/20"
               />
             </div>
@@ -125,13 +125,13 @@ export const TrackOrderModal: React.FC<TrackOrderModalProps> = ({
                 <button
                   key={ord.orderId}
                   onClick={() => setSelectedOrder(ord)}
-                  className={`text-xs px-2.5 py-1 rounded-lg font-mono font-bold shrink-0 cursor-pointer transition-all ${
+                  className={`text-xs px-2.5 py-1 rounded-lg font-bold shrink-0 cursor-pointer transition-all ${
                     selectedOrder?.orderId === ord.orderId
                       ? 'bg-[#173F2E] text-white'
                       : 'bg-[#FAF6EC] text-[#5C7767] hover:bg-[#EAE4D5]'
                   }`}
                 >
-                  #{ord.orderId}
+                  Order {idx + 1}
                 </button>
               ))}
             </div>
@@ -142,7 +142,7 @@ export const TrackOrderModal: React.FC<TrackOrderModalProps> = ({
               <AlertCircle className="w-5 h-5 mx-auto mb-1" />
               <p className="font-bold">No orders found for &ldquo;{searchQuery}&rdquo;</p>
               <p className="text-[#991B1B]">
-                Please double-check the phone number or order ID used when placing your order.
+                Please double-check the phone number used when placing your order.
               </p>
             </div>
           )}
@@ -153,7 +153,7 @@ export const TrackOrderModal: React.FC<TrackOrderModalProps> = ({
               <div className="bg-[#173F2E] text-white rounded-2xl p-5 relative overflow-hidden shadow-md">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold text-[#52B788] uppercase tracking-wider">
-                    Order #{selectedOrder.orderId}
+                    Customer Order
                   </span>
                   <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-[#23563F] text-[#D8EADB]">
                     {new Date(selectedOrder.createdAt).toLocaleTimeString([], {
@@ -183,7 +183,7 @@ export const TrackOrderModal: React.FC<TrackOrderModalProps> = ({
                 </div>
 
                 <p className="text-xs text-[#D8EADB]">
-                  Delivery to: <strong>{selectedOrder.customer.address}</strong>, {selectedOrder.customer.area} LGA
+                  Delivery to: <strong>{selectedOrder.customer.address}</strong>, {selectedOrder.customer.area}
                 </p>
               </div>
 

@@ -353,7 +353,7 @@ export const CustomerLoginModal: React.FC<CustomerLoginModalProps> = ({
 
                 <div>
                   <label className="block text-xs font-bold text-[#173F2E] uppercase tracking-wider mb-1">
-                    Delivery Local Government Area (LGA)
+                    Delivery LGA
                   </label>
                   <select
                     value={profileArea}
@@ -362,7 +362,7 @@ export const CustomerLoginModal: React.FC<CustomerLoginModalProps> = ({
                   >
                     {AKWA_IBOM_LGAS.map((lga) => (
                       <option key={lga} value={lga}>
-                        {lga} LGA
+                        {lga}
                       </option>
                     ))}
                   </select>
